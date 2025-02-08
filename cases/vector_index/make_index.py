@@ -21,7 +21,7 @@ IP = Inner Product，
 '''
 
 # 模型名稱
-model_name = 'sentence-transformers/distiluse-base-multilingual-cased-v1'
+model_name = 'sentence-transformers/distiluse-base-multilingual-cased-v1' # 可以上hugging face 找
 
 # 索引存放路徑
 index_path = './vector.index'

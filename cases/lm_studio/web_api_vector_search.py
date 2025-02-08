@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 from openai import OpenAI
-from modules.bm25 import bm25_similarity, get_page_score, load_qa, get_questions, tokenize
+from modules.bm25 import load_qa
 from sentence_transformers import SentenceTransformer
 import faiss
 
@@ -10,7 +10,7 @@ bi_encoder = SentenceTransformer(model_name)
 
 # 讀取索引
 index_path = './vector.index'
-index = faiss.read_index(index_path)
+index_ = faiss.read_index(index_path)
 
 '''
 Flask 初始化
@@ -74,7 +74,7 @@ def chat():
         )
 
         # 查詢
-        D, I = index.search(embeddings, k=top_k)
+        D, I = index_.search(embeddings, k=top_k)
 
         # 顯示結果
         list_scores = D.tolist()
@@ -111,7 +111,7 @@ def chat():
     def generate_responses():
         # 透過 Chat Completions API 來取得 ai assistant 的回應
         completion = client.chat.completions.create(
-            model="audreyt/Taiwan-LLM-7B-v2.0.1-chat-GGUF/Taiwan-LLM-7B-v2.0.1-chat-Q5_K_M.gguf",
+            model="lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
             messages=sessions_history[session_id],
             temperature=0.7,
             stream=True,

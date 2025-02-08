@@ -93,7 +93,7 @@ def chat():
     def generate_responses():
         # 透過 Chat Completions API 來取得 ai assistant 的回應
         completion = client.chat.completions.create(
-            model="audreyt/Taiwan-LLM-7B-v2.0.1-chat-GGUF/Taiwan-LLM-7B-v2.0.1-chat-Q5_K_M.gguf",
+            model="lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
             messages=sessions_history[session_id],
             temperature=0.7,
             stream=True,

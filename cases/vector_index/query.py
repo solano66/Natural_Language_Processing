@@ -6,7 +6,7 @@ import faiss
 import json
 
 # 基本設定
-model_name = 'sentence-transformers/distiluse-base-multilingual-cased-v1'
+model_name = 'sentence-transformers/distiluse-base-multilingual-cased-v1' # 要跟產生的向量同模型
 bi_encoder = SentenceTransformer(model_name)
 
 # 讀取索引
@@ -14,7 +14,7 @@ index_path = './vector.index'
 index = faiss.read_index(index_path)
 
 # 查詢句子
-list_query = ['為什麼雪是白色的', '為什麼太陽會升起和落下', '為什麼我們有五官']
+list_query = ['為什麼雪是白色的', '為什麼太陽會升起和落下', '為什麼我們有五官', '為什麼雲看起來是白色的']
 
 # 將查詢句子轉換成向量
 embeddings = bi_encoder.encode(
@@ -25,10 +25,10 @@ embeddings = bi_encoder.encode(
 )
 
 # 查詢
-D, I = index.search(embeddings, k=3)
+D, I = index.search(embeddings, k=3) # 查詢前 k 筆相近的
 
 # 顯示結果
-list_scores = D.tolist()
+list_scores = D.tolist() # D = 相似分數，0~1
 list_ids = I.tolist()
 print(f"相似度: {list_scores}")
 print(f"檢索的 Document IDs 為: {list_ids}")
@@ -39,4 +39,4 @@ with open('../lm_studio/qa.json', 'r', encoding='utf-8') as f:
 for index, li_ids in enumerate(list_ids):
     print(f"查詢問題: {list_query[index]}")
     for id in li_ids:
-        print(f"- 相似問題: {li_qa[id]['Q']}，Document ID: {i}，相似度: {list_scores[ index ][ li_ids.index(id) ]}")
+        print(f"- 相似問題: {li_qa[id]['Q']}，Document ID: {id}，相似度: {list_scores[ index ][ li_ids.index(id) ]}")
