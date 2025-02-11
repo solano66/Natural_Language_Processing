@@ -1,8 +1,3 @@
-'''
-參考結果
-https://i.imgur.com/o6QvMn9.png
-'''
-
 import os
 from google import genai
 from google.genai import types
