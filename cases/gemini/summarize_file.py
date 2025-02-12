@@ -14,7 +14,7 @@ file = client.files.upload(file='./poem.txt')
 
 # Generate content
 response = client.models.generate_content(
-    model="gemini-1.5-flash-8b",
-    contents=["你能夠對這個檔案進行摘要嗎？", file]
+    model="gemini-2.0-flash-thinking-exp-01-21",
+    contents=["你能夠對這個檔案進行摘要嗎？", file],
 )
 print(response.text)
